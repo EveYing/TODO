@@ -1,0 +1,47 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="false">
+        <mat-toolbar>MENU</mat-toolbar>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/" (Click)="drawer.close()">Home</a>
+            <a mat-list-item routerLink="/login" (Click)="drawer.close()">Login</a>
+            <a mat-list-item routerLink="/kanban" (Click)="drawer.close()">Kanban</a>
+            <a mat-list-item routerLink="/customers" (Click)="drawer.close()">SSR</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <button 
+                type="button"
+                aria-label="Toggle sidenav"
+                mat-Stroked-button
+                (click)="drawer.toggle()"
+                *ngIf="isHandset$ | async">
+                <mat-icon aria-label="Side navigation">MENU</mat-icon>
+            </button>
+            <span class="logo" routerLink="/">🔥 Angular Firestarter</span>
+
+            <span class="fill-space"></span>
+            <div *ngIf="!(isHandset$ | async)">
+              <a mat-button routerLink="/kanban">🍱 Kanban Demo</a>
+              <a mat-button routerLink="/customers">⚡ SSR Demo</a>
+      
+              <a mat-button routerLink="/login">🔑 Login</a>
+      
+            </div>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              
+              <mat-menu #menu="matMenu">
+                <a mat-menu-item href="https://fireship.page.link/slack">
+                  <i>💬</i>
+                  <span>Chat on Slack</span>
+                </a>
+              </mat-menu>
+        </mat-toolbar>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>

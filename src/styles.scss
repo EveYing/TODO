@@ -1,1 +1,72 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
+@include mat-core();
+
+$custom-blue: (
+    50 : #f9fcfe,
+    100 : #f1f6fb,
+    200 : #e7f1f9,
+    300 : #ddebf7,
+    400 : #d6e6f5,
+    500 : #cfe2f3,
+    600 : #cadff1,
+    700 : #c3daef,
+    800 : #bdd6ed,
+    900 : #b2cfea,
+    A100 : #fce5cd,
+    A200 : #f6d6b6,
+    A400 : #f8c794,
+    A700 : #f6b26b,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$todo-primary: mat-palette($custom-blue);
+$todo-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$todo-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$todo-theme: mat-light-theme((
+  color: (
+    primary: $todo-primary,
+    accent: $todo-accent,
+    warn: $todo-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($todo-theme);
+
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
