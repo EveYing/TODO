@@ -22,5 +22,9 @@
         >
             <mat-card [ngClass]="task.label"> {{ task.description }} </mat-card>
         </div>
+
+        <button mat-stroked-button (click)="openDialog()">
+            <mat-icon>add</mat-icon>
+        </button>
     </div>
 </mat-card>

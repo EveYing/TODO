@@ -26,8 +26,8 @@ export class BoardService {
     return this.db.collection('boards').doc(boardId).delete();
   }
 
-  updateTasks(boardId: string, tasks: Task[]) {
-    return this.db.collection('board').doc(boardId).update({ tasks });
+  async updateTasks(boardId: string, tasks: Task[]) {
+    return this.db.collection('boards').doc(boardId).update({ tasks });
   }
 
   removeTask(boardId:string, task: Task) {
