@@ -1,19 +1,35 @@
 .content {
-    overflow: hidden;
-    height: auto;
-    padding: 20px;
-    width: 100%;
+  overflow: hidden;
+  height: auto;
+  padding: 20px;
+  width: 100%;
 }
 
 mat-form-field {
-    width: 100%;
-  }
+  width: 100%;
+}
 
-textarea { display: block; width: 100%; }
+textarea {
+  display: block;
+  width: 100%;
+}
 
-.blue { color: #71deff; }
-.green { color: #36e9b6; }
-.yellow { color: #ffcf44; }
-.purple { color: #b15cff; }
-.gray { color: gray; }
-.red { color: #e74a4a; }
+.blue {
+  color: #b4e3f1;
+}
+.green {
+  color: #a9d6c9;
+}
+.yellow {
+  color: #f7e8ba;
+}
+.purple {
+  color: #d7b6f5;
+}
+.red {
+  color: #eea0a0;
+}
+
+.gray {
+  color: gray;
+}

@@ -41,7 +41,6 @@ export class BoardListComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log({ result });
       if (!result) {
         return;
       }
