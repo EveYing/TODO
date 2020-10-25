@@ -9,19 +9,18 @@ import { BoardDialogComponent } from '../dialogs/board-dialog.component';
 @Component({
   selector: 'app-board-list',
   templateUrl: './board-list.component.html',
-  styleUrls: ['./board-list.component.scss']
+  styleUrls: ['./board-list.component.scss'],
 })
 export class BoardListComponent implements OnInit, OnDestroy {
   boards: Board[];
   sub: Subscription;
 
-  constructor(public boardService: BoardService, public dialog: MatDialog) { }
+  constructor(public boardService: BoardService, public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.sub = this.boardService.getUserBoards()
-      .subscribe(boards => {
-        this.boards = boards;
-      });
+    this.sub = this.boardService.getUserBoards().subscribe((boards) => {
+      this.boards = boards;
+    });
   }
 
   ngOnDestroy() {
@@ -33,18 +32,27 @@ export class BoardListComponent implements OnInit, OnDestroy {
     this.boardService.sortBoards(this.boards);
   }
 
-  openBoardDialog(): void {
+  openBoardDialog(board?: Board, idx?: number): void {
     const dialogRef = this.dialog.open(BoardDialogComponent, {
       width: '400px',
-      data: {  }
+      data: board
+        ? { board: { ...board }, isNew: false, idx }
+        : { board: {}, isNew: true },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log({ result });
+      if (!result) {
+        return;
+      }
+      if (result.isNew) {
         this.boardService.createBoard({
-          title: result,
-          priority: this.boards.length
+          title: result.board.title,
+          priority: this.boards.length,
         });
+      } else {
+        // Update board according to result.board
+        this.boardService.updateBoardTitle(result.board.id, result.board.title);
       }
     });
   }

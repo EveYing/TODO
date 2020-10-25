@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { BoardService } from '../board.service';
-import { Task } from '../board.model';
+import { Board, Task } from '../board.model';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDialogComponent } from '../dialogs/task-dialog.component';
 
@@ -11,7 +11,7 @@ import { TaskDialogComponent } from '../dialogs/task-dialog.component';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent {
-  @Input() board;
+  @Input() board: Board;
 
   constructor(private boardService: BoardService, private dialog: MatDialog) {}
 
@@ -32,6 +32,9 @@ export class BoardComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result.isNew) {
+          if (!this.board.tasks) {
+            this.board.tasks = [];
+          }
           this.boardService.updateTasks(this.board.id, [
             ...this.board.tasks,
             result.task
@@ -45,4 +48,7 @@ export class BoardComponent {
     });
   }
 
+  handleDelete() {
+    this.boardService.deleteBoard(this.board.id);
+  }
 }

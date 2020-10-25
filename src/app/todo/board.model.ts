@@ -7,5 +7,5 @@ export interface Board {
 
 export interface Task {
     description?: string;
-    label?: 'LightCyan' | 'LightBlue' | 'LightCoral' | 'LightGoldenRodYellow' | 'LightGray' | 'LightSeaGreen' | 'LightSalmon' | 'LightPink';
+    label?: 'purple' | 'blue' | 'green' | 'yellow' | 'red' | 'gray';
 }

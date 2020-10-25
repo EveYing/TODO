@@ -1,3 +1,4 @@
+import { Identifiers } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -6,20 +7,22 @@ import { switchMap } from 'rxjs/operators';
 import { Board, Task } from './board.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BoardService {
-
-  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) { }
-
+  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {}
 
   async createBoard(data: Board) {
     const user = await this.afAuth.currentUser;
     return this.db.collection('boards').add({
       ...data,
       uid: user.uid,
-      tasks: [{ description: 'Hello!!!', label: 'LightBlue'}]
+      tasks: [],
     });
+  }
+
+  async updateBoardTitle(boardId: string, title: string) {
+    return this.db.collection('boards').doc(boardId).update({ title });
   }
 
   deleteBoard(boardId: string) {
@@ -30,30 +33,35 @@ export class BoardService {
     return this.db.collection('boards').doc(boardId).update({ tasks });
   }
 
-  removeTask(boardId:string, task: Task) {
-    return this.db.collection('boards').doc(boardId).update({
-      tasks: firebase.firestore.FieldValue.arrayRemove(task)
-    });
+  removeTask(boardId: string, task: Task) {
+    return this.db
+      .collection('boards')
+      .doc(boardId)
+      .update({
+        tasks: firebase.firestore.FieldValue.arrayRemove(task),
+      });
   }
 
   getUserBoards() {
     return this.afAuth.authState.pipe(
-      switchMap(user => {
+      switchMap((user) => {
         if (user) {
-          return this.db.collection<Board>('boards', ref =>
-            ref.where('uid', '==', user.uid).orderBy('priority')
-          ).valueChanges({ idField: 'id'});
+          return this.db
+            .collection<Board>('boards', (ref) =>
+              ref.where('uid', '==', user.uid).orderBy('priority')
+            )
+            .valueChanges({ idField: 'id' });
         } else {
           return [];
         }
       })
-    )
+    );
   }
 
   sortBoards(boards: Board[]) {
     const db = firebase.firestore();
     const batch = db.batch();
-    const refs = boards.map(b => db.collection('boards').doc(b.id));
+    const refs = boards.map((b) => db.collection('boards').doc(b.id));
     refs.forEach((ref, idx) => batch.update(ref, { priority: idx }));
     batch.commit();
   }
