@@ -1,7 +1,7 @@
 <mat-card class="outer-card">
   <mat-card-header>
     <ng-content></ng-content>
-    <mat-card-title (click)="onTitleClick.emit(true)">
+    <mat-card-title (click)="titleClick.emit(true)">
       {{ board.title }}
     </mat-card-title>
     <mat-card-subtitle>

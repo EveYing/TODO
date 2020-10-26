@@ -17,17 +17,17 @@ export class BoardListComponent implements OnInit, OnDestroy {
 
   constructor(public boardService: BoardService, public dialog: MatDialog) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sub = this.boardService.getUserBoards().subscribe((boards) => {
       this.boards = boards;
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
     this.boardService.sortBoards(this.boards);
   }

@@ -7,18 +7,18 @@ import { UserModule } from './user/user.module';
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   {
-    path: 'login', 
-    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
+    path: 'login',
+    loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
   {
-    path: 'todo', 
-    loadChildren: () => import('./todo/todo.module').then(m => m.TodoModule),
-    canActivate: [AuthGuard]
-  }
+    path: 'todo',
+    loadChildren: () => import('./todo/todo.module').then((m) => m.TodoModule),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

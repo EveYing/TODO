@@ -4,23 +4,22 @@ import { Board } from 'src/app/todo/board.model';
 @Component({
   selector: 'app-delete-button',
   templateUrl: './delete-button.component.html',
-  styleUrls: ['./delete-button.component.scss']
+  styleUrls: ['./delete-button.component.scss'],
 })
 export class DeleteButtonComponent {
-
   canDelete: boolean;
 
   @Output() delete = new EventEmitter<boolean>();
 
-  prepareForDelete() {
+  prepareForDelete(): void {
     this.canDelete = true;
   }
 
-  cancel() {
+  cancel(): void {
     this.canDelete = false;
   }
 
-  deleteBoard() {
+  deleteBoard(): void {
     this.delete.emit(true);
     this.canDelete = false;
   }

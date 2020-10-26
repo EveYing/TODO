@@ -12,13 +12,13 @@ import { TaskDialogComponent } from '../dialogs/task-dialog.component';
 })
 export class BoardComponent {
   @Input() board: Board;
-  @Output() onTitleClick = new EventEmitter<boolean>();
+  @Output() titleClick = new EventEmitter<boolean>();
 
   constructor(private boardService: BoardService, private dialog: MatDialog) {}
 
-  async taskDrop(event: CdkDragDrop<string[]>) {
+  taskDrop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.board.tasks, event.previousIndex, event.currentIndex);
-    await this.boardService.updateTasks(this.board.id, this.board.tasks);
+    this.boardService.updateTasks(this.board.id, this.board.tasks);
   }
 
   openDialog(task?: Task, idx?: number): void {
@@ -49,7 +49,7 @@ export class BoardComponent {
     });
   }
 
-  handleDelete() {
-    this.boardService.deleteBoard(this.board.id);
+  handleDelete(): Promise<void> {
+    return this.boardService.deleteBoard(this.board.id);
   }
 }

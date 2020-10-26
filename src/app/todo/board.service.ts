@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
+import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Board, Task } from './board.model';
 
@@ -12,7 +13,7 @@ import { Board, Task } from './board.model';
 export class BoardService {
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {}
 
-  async createBoard(data: Board) {
+  async createBoard(data: Board): Promise<any> {
     const user = await this.afAuth.currentUser;
     return this.db.collection('boards').add({
       ...data,
@@ -21,19 +22,19 @@ export class BoardService {
     });
   }
 
-  async updateBoardTitle(boardId: string, title: string) {
+  async updateBoardTitle(boardId: string, title: string): Promise<void> {
     return this.db.collection('boards').doc(boardId).update({ title });
   }
 
-  deleteBoard(boardId: string) {
+  deleteBoard(boardId: string): Promise<void> {
     return this.db.collection('boards').doc(boardId).delete();
   }
 
-  async updateTasks(boardId: string, tasks: Task[]) {
+  async updateTasks(boardId: string, tasks: Task[]): Promise<any> {
     return this.db.collection('boards').doc(boardId).update({ tasks });
   }
 
-  removeTask(boardId: string, task: Task) {
+  removeTask(boardId: string, task: Task): Promise<any> {
     return this.db
       .collection('boards')
       .doc(boardId)
@@ -42,7 +43,7 @@ export class BoardService {
       });
   }
 
-  getUserBoards() {
+  getUserBoards(): Observable<Board[]> {
     return this.afAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
@@ -58,7 +59,7 @@ export class BoardService {
     );
   }
 
-  sortBoards(boards: Board[]) {
+  sortBoards(boards: Board[]): void {
     const db = firebase.firestore();
     const batch = db.batch();
     const refs = boards.map((b) => db.collection('boards').doc(b.id));
