@@ -29,12 +29,11 @@
       >
         <mat-icon aria-label="Side navigation">menu</mat-icon>
       </button>
-      <span class="logo" routerLink="/">💞 EVE'S TODO LIST</span>
+      <span class="logo" routerLink="/">🕊 EVE'S TODO LIST</span>
 
       <span class="fill-space"></span>
       <div *ngIf="!(isHandset$ | async)">
         <a mat-button routerLink="/todo">🍱 TODO LIST</a>
-        <a mat-button routerLink="/customers">⚡ SSR DEMO</a>
         <a mat-button routerLink="/login">🔑 LOGIN</a>
       </div>
       <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
