@@ -1,3 +1,4 @@
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -13,6 +14,12 @@ const routes: Routes = [
   {
     path: 'todo',
     loadChildren: () => import('./todo/todo.module').then((m) => m.TodoModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ledger',
+    loadChildren: () =>
+      import('./ledger/ledger.module').then((m) => m.LedgerModule),
     canActivate: [AuthGuard],
   },
 ];
